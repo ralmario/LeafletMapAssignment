@@ -1,0 +1,37 @@
+---
+title: "Peer-graded Assignment Submission: R Markdown and Leaflet"
+author: "Ranxel Almario"
+date: "January 21, 2019"
+output: 
+        html_document:
+                css: air.css
+---
+<style>
+h1, h2, h3 {
+text-align: left !important;
+}
+body {
+text-align: justify;
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### FIFA World Rankings of Southeast Asian Nations
+
+```{r prep, echo=FALSE}
+library("leaflet")
+library("openxlsx")
+latlng <- read.xlsx("fifa_rankings.xlsx", sheet=1, colNames=TRUE, skipEmptyRows = FALSE, skipEmptyCols = TRUE, fillMergedCells = FALSE, startRow = 1)
+```
+
+```{r map, echo=FALSE, message=FALSE}
+latlng %>% 
+leaflet() %>% 
+addProviderTiles(providers$Esri.WorldGrayCanvas) %>% 
+addMarkers(popup = latlng$labels)
+```
+
+_**Source:** FIFA.com. (2018). The FIFA/Coca-Cola World Ranking - Ranking Table as of December 20, 2018. Retrieved from [https://www.fifa.com/fifa-world-ranking/ranking-table/men/#AFC](https://www.fifa.com/fifa-world-ranking/ranking-table/men/#AFC)_
